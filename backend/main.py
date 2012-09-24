@@ -69,11 +69,15 @@ class ImagePage(webapp2.RequestHandler):
                                     "WHERE ANCESTOR IS :1 AND id = :2 ",
                                     userimage_key(user_id),
                                     img_id)
+            if results.count() < 1:
+                self.error(404)
+
             for userimage in results:
                 self.response.headers['Content-Type'] = 'image/jpeg'
                 self.response.out.write(userimage.data)
                 return 
 
+            
 
 
 
